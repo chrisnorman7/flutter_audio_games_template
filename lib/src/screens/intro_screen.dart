@@ -1,5 +1,4 @@
 import 'package:backstreets_widgets/screens.dart';
-import 'package:backstreets_widgets/widgets.dart';
 import 'package:dart_synthizer/dart_synthizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_games/flutter_audio_games.dart';
@@ -63,22 +62,12 @@ class IntroScreenState extends ConsumerState<IntroScreen> {
         interfaceSoundsSource.gain.value = gameOptions.interfaceSoundsGain;
         musicSource.gain.value = gameOptions.musicGain;
         ambianceSoundsSource.gain.value = gameOptions.ambiancesGain;
-        return TimedBuilders(
-          duration: const Duration(seconds: 3),
-          builders: [
-            (final innerContext) {
-              innerContext.playSound(
-                assetPath: Assets.sounds.interface.intro,
-                source: interfaceSoundsSource,
-                destroy: true,
-              );
-              return const SimpleScaffold(
-                title: '__name__',
-                body: LoadingWidget(),
-              );
-            },
-            (final innerContext) => const MainMenu(),
-          ],
+        return TransitionSoundBuilder(
+          duration: const Duration(seconds: 2),
+          builder: (final context) => const MainMenu(),
+          sound: Assets.sounds.interface.intro,
+          source: interfaceSoundsSource,
+          loadingBuilder: (final context) => const LoadingScreen(),
         );
       },
       error: ErrorScreen.withPositional,
