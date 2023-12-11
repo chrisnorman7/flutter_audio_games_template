@@ -13,8 +13,7 @@ dependencies:
   dart_synthizer: ^0.11.2
   flutter:
     sdk: flutter
-  flutter_audio_games:
-    path: ../flutter_audio_games
+  flutter_audio_games: ^0.7.0
   flutter_riverpod: ^2.4.9
   flutter_synthizer: ^0.3.2
   json_annotation: ^4.8.1
