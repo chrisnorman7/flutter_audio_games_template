@@ -4,6 +4,7 @@
     "bools",
     "Colors",
     "formals",
+    "hrtf",
     "pubspec",
     "riverpod",
     "synthizer",

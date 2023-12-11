@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_synthizer/flutter_synthizer.dart';
+
+import 'src/screens/intro_screen.dart';
 
 /// Entry point.
 void main() {
@@ -13,12 +16,14 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(final BuildContext context) => MaterialApp(
-        title: '__name__',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+  Widget build(final BuildContext context) => SynthizerScope(
+        child: MaterialApp(
+          title: '__name__',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const IntroScreen(),
         ),
-        home: const Placeholder(),
       );
 }

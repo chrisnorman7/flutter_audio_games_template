@@ -34,3 +34,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - sounds/interface/
+    - sounds/menus/
+    - sounds/music/
