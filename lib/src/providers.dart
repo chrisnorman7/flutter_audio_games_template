@@ -33,6 +33,14 @@ DirectSource ambianceSoundsSource(
 ) =>
     synthizerContext.createDirectSource();
 
+/// The footstep sounds source to use.
+@riverpod
+DirectSource footstepSoundsSource(
+  final FootstepSoundsSourceRef ref,
+  final Context synthizerContext,
+) =>
+    synthizerContext.createDirectSource();
+
 /// The shared preferences provider.
 @riverpod
 Future<SharedPreferences> sharedPreferences(final SharedPreferencesRef ref) =>

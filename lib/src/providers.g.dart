@@ -457,6 +457,150 @@ class _AmbianceSoundsSourceProviderElement
       (origin as AmbianceSoundsSourceProvider).synthizerContext;
 }
 
+String _$footstepSoundsSourceHash() =>
+    r'40f117f280753632e3d38b1ba86ba715c57c737e';
+
+/// The footstep sounds source to use.
+///
+/// Copied from [footstepSoundsSource].
+@ProviderFor(footstepSoundsSource)
+const footstepSoundsSourceProvider = FootstepSoundsSourceFamily();
+
+/// The footstep sounds source to use.
+///
+/// Copied from [footstepSoundsSource].
+class FootstepSoundsSourceFamily extends Family<DirectSource> {
+  /// The footstep sounds source to use.
+  ///
+  /// Copied from [footstepSoundsSource].
+  const FootstepSoundsSourceFamily();
+
+  /// The footstep sounds source to use.
+  ///
+  /// Copied from [footstepSoundsSource].
+  FootstepSoundsSourceProvider call(
+    Context synthizerContext,
+  ) {
+    return FootstepSoundsSourceProvider(
+      synthizerContext,
+    );
+  }
+
+  @override
+  FootstepSoundsSourceProvider getProviderOverride(
+    covariant FootstepSoundsSourceProvider provider,
+  ) {
+    return call(
+      provider.synthizerContext,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'footstepSoundsSourceProvider';
+}
+
+/// The footstep sounds source to use.
+///
+/// Copied from [footstepSoundsSource].
+class FootstepSoundsSourceProvider extends AutoDisposeProvider<DirectSource> {
+  /// The footstep sounds source to use.
+  ///
+  /// Copied from [footstepSoundsSource].
+  FootstepSoundsSourceProvider(
+    Context synthizerContext,
+  ) : this._internal(
+          (ref) => footstepSoundsSource(
+            ref as FootstepSoundsSourceRef,
+            synthizerContext,
+          ),
+          from: footstepSoundsSourceProvider,
+          name: r'footstepSoundsSourceProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$footstepSoundsSourceHash,
+          dependencies: FootstepSoundsSourceFamily._dependencies,
+          allTransitiveDependencies:
+              FootstepSoundsSourceFamily._allTransitiveDependencies,
+          synthizerContext: synthizerContext,
+        );
+
+  FootstepSoundsSourceProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.synthizerContext,
+  }) : super.internal();
+
+  final Context synthizerContext;
+
+  @override
+  Override overrideWith(
+    DirectSource Function(FootstepSoundsSourceRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FootstepSoundsSourceProvider._internal(
+        (ref) => create(ref as FootstepSoundsSourceRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        synthizerContext: synthizerContext,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<DirectSource> createElement() {
+    return _FootstepSoundsSourceProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FootstepSoundsSourceProvider &&
+        other.synthizerContext == synthizerContext;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, synthizerContext.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin FootstepSoundsSourceRef on AutoDisposeProviderRef<DirectSource> {
+  /// The parameter `synthizerContext` of this provider.
+  Context get synthizerContext;
+}
+
+class _FootstepSoundsSourceProviderElement
+    extends AutoDisposeProviderElement<DirectSource>
+    with FootstepSoundsSourceRef {
+  _FootstepSoundsSourceProviderElement(super.provider);
+
+  @override
+  Context get synthizerContext =>
+      (origin as FootstepSoundsSourceProvider).synthizerContext;
+}
+
 String _$sharedPreferencesHash() => r'e607f7351fa94c298e3676fa14ad95aac093f433';
 
 /// The shared preferences provider.

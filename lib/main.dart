@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_synthizer/flutter_synthizer.dart';
 
 import 'gen/assets.gen.dart';
+import 'src/intents/adjust_gain_direction.dart';
 import 'src/intents/adjust_gain_intent.dart';
 import 'src/providers.dart';
 import 'src/screens/intro_screen.dart';
@@ -34,7 +35,7 @@ class MyApp extends ConsumerWidget {
                 getGain: (final gameOptions) => gameOptions.interfaceSoundsGain,
                 setGain: (final gameOptions, final gain) =>
                     gameOptions.interfaceSoundsGain = gain,
-                gainModifier: 0.1,
+                gainDirection: AdjustGainDirection.up,
               ),
               const SingleActivator(LogicalKeyboardKey.f5, control: true):
                   AdjustGainIntent(
@@ -44,7 +45,7 @@ class MyApp extends ConsumerWidget {
                 getGain: (final gameOptions) => gameOptions.interfaceSoundsGain,
                 setGain: (final gameOptions, final gain) =>
                     gameOptions.interfaceSoundsGain = gain,
-                gainModifier: -0.1,
+                gainDirection: AdjustGainDirection.down,
               ),
               const SingleActivator(LogicalKeyboardKey.f6, shift: true):
                   AdjustGainIntent(
@@ -53,7 +54,7 @@ class MyApp extends ConsumerWidget {
                 getGain: (final gameOptions) => gameOptions.musicGain,
                 setGain: (final gameOptions, final gain) =>
                     gameOptions.musicGain = gain,
-                gainModifier: 0.1,
+                gainDirection: AdjustGainDirection.up,
               ),
               const SingleActivator(LogicalKeyboardKey.f6, control: true):
                   AdjustGainIntent(
@@ -62,7 +63,7 @@ class MyApp extends ConsumerWidget {
                 getGain: (final gameOptions) => gameOptions.musicGain,
                 setGain: (final gameOptions, final gain) =>
                     gameOptions.musicGain = gain,
-                gainModifier: -0.1,
+                gainDirection: AdjustGainDirection.down,
               ),
               const SingleActivator(LogicalKeyboardKey.f7, shift: true):
                   AdjustGainIntent(
@@ -71,7 +72,7 @@ class MyApp extends ConsumerWidget {
                 getGain: (final gameOptions) => gameOptions.ambiancesGain,
                 setGain: (final gameOptions, final gain) =>
                     gameOptions.ambiancesGain = gain,
-                gainModifier: 0.1,
+                gainDirection: AdjustGainDirection.up,
               ),
               const SingleActivator(LogicalKeyboardKey.f7, control: true):
                   AdjustGainIntent(
@@ -80,7 +81,25 @@ class MyApp extends ConsumerWidget {
                 getGain: (final gameOptions) => gameOptions.ambiancesGain,
                 setGain: (final gameOptions, final gain) =>
                     gameOptions.ambiancesGain = gain,
-                gainModifier: -0.1,
+                gainDirection: AdjustGainDirection.down,
+              ),
+              const SingleActivator(LogicalKeyboardKey.f8, shift: true):
+                  AdjustGainIntent(
+                getSource: (final synthizerContext) =>
+                    ref.read(footstepSoundsSourceProvider(synthizerContext)),
+                getGain: (final gameOptions) => gameOptions.footstepSoundsGain,
+                setGain: (final gameOptions, final gain) =>
+                    gameOptions.footstepSoundsGain = gain,
+                gainDirection: AdjustGainDirection.up,
+              ),
+              const SingleActivator(LogicalKeyboardKey.f8, control: true):
+                  AdjustGainIntent(
+                getSource: (final synthizerContext) =>
+                    ref.read(footstepSoundsSourceProvider(synthizerContext)),
+                getGain: (final gameOptions) => gameOptions.footstepSoundsGain,
+                setGain: (final gameOptions, final gain) =>
+                    gameOptions.footstepSoundsGain = gain,
+                gainDirection: AdjustGainDirection.down,
               ),
             },
             actions: {
@@ -91,9 +110,12 @@ class MyApp extends ConsumerWidget {
                   final gameOptions = await ref.read(
                     gameOptionsProvider.future,
                   );
-                  final gain =
-                      (intent.getGain(gameOptions) + intent.gainModifier)
-                          .clamp(0.0, 10.0);
+                  final gainModifier = switch (intent.gainDirection) {
+                    AdjustGainDirection.up => intent.gainModifier,
+                    AdjustGainDirection.down => -intent.gainModifier,
+                  };
+                  final gain = (intent.getGain(gameOptions) + gainModifier)
+                      .clamp(intent.minGain, intent.maxGain);
                   final source = intent.getSource(synthizerContext)
                     ..gain.value = gain;
                   intent.setGain(gameOptions, gain);

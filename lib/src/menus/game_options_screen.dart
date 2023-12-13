@@ -22,13 +22,16 @@ class GameOptionsScreen extends ConsumerWidget {
   @override
   Widget build(final BuildContext context, final WidgetRef ref) {
     final synthizerContext = context.synthizerContext;
-    final ambianceSource = ref.watch(
-      ambianceSoundsSourceProvider(synthizerContext),
-    );
     final interfaceSoundsSource = ref.watch(
       interfaceSoundsSourceProvider(synthizerContext),
     );
     final musicSource = ref.watch(musicSourceProvider(synthizerContext));
+    final ambianceSoundsSource = ref.watch(
+      ambianceSoundsSourceProvider(synthizerContext),
+    );
+    final footstepSoundsSource = ref.watch(
+      footstepSoundsSourceProvider(synthizerContext),
+    );
     final value = ref.watch(gameOptionsProvider);
     return Cancel(
       child: SimpleScaffold(
@@ -36,17 +39,6 @@ class GameOptionsScreen extends ConsumerWidget {
         body: value.when(
           data: (final gameOptions) => ListView(
             children: [
-              GainListTile(
-                title: 'Ambiances volume',
-                gain: gameOptions.ambiancesGain,
-                onChanged: (final value) async {
-                  gameOptions.ambiancesGain = value;
-                  await gameOptions.save(ref);
-                },
-                source: interfaceSoundsSource,
-                volumeChangeSound: Assets.sounds.interface.volumeChange,
-                autofocus: true,
-              ),
               GainListTile(
                 title: 'Interface sounds volume',
                 gain: gameOptions.interfaceSoundsGain,
@@ -67,13 +59,35 @@ class GameOptionsScreen extends ConsumerWidget {
                 source: musicSource,
                 volumeChangeSound: Assets.sounds.interface.volumeChange,
               ),
+              GainListTile(
+                title: 'Ambiances volume',
+                gain: gameOptions.ambiancesGain,
+                onChanged: (final value) async {
+                  gameOptions.ambiancesGain = value;
+                  await gameOptions.save(ref);
+                },
+                source: ambianceSoundsSource,
+                autofocus: true,
+                volumeChangeSound: Assets.sounds.interface.volumeChange,
+              ),
+              GainListTile(
+                title: 'Footstep sounds volume',
+                gain: gameOptions.footstepSoundsGain,
+                onChanged: (final value) async {
+                  gameOptions.footstepSoundsGain = value;
+                  await gameOptions.save(ref);
+                },
+                source: footstepSoundsSource,
+                volumeChangeSound: Assets.sounds.interface.volumeChange,
+              ),
               ListTile(
                 title: const Text('Audio mode'),
                 subtitle: Text(
-                  synthizerContext.defaultPannerStrategy.value ==
-                          PannerStrategy.stereo
-                      ? 'Speakers'
-                      : 'Headphones',
+                  switch (gameOptions.pannerStrategy) {
+                    PannerStrategy.hrtf => 'Headphones',
+                    PannerStrategy.stereo => 'Speakers',
+                    _ => '!! Should never happen !!'
+                  },
                 ),
                 onTap: () async {
                   if (gameOptions.pannerStrategy == PannerStrategy.stereo) {
@@ -88,21 +102,7 @@ class GameOptionsScreen extends ConsumerWidget {
               ),
               ListTile(
                 title: const Text('Reset Options'),
-                onTap: () => confirm(
-                  context: context,
-                  message: 'Really reset options to their defaults?',
-                  yesCallback: () async {
-                    Navigator.pop(context);
-                    final newOptions = GameOptions();
-                    ambianceSource.gain.value = newOptions.ambiancesGain;
-                    interfaceSoundsSource.gain.value =
-                        newOptions.interfaceSoundsGain;
-                    musicSource.gain.value = newOptions.musicGain;
-                    synthizerContext.defaultPannerStrategy.value =
-                        newOptions.pannerStrategy;
-                    await newOptions.save(ref);
-                  },
-                ),
+                onTap: () => resetGameOptions(context, ref),
               ),
             ],
           ),
@@ -112,4 +112,40 @@ class GameOptionsScreen extends ConsumerWidget {
       ),
     );
   }
+
+  /// Reset all options to their defaults.
+  void resetGameOptions(final BuildContext context, final WidgetRef ref) =>
+      confirm(
+        context: context,
+        message: 'Really reset options to their defaults?',
+        yesCallback: () async {
+          Navigator.pop(context);
+          final synthizerContext = context.synthizerContext;
+          final interfaceSoundsSource = ref.read(
+            interfaceSoundsSourceProvider(synthizerContext),
+          );
+          final ambianceSource = ref.read(
+            ambianceSoundsSourceProvider(synthizerContext),
+          );
+          final musicSource = ref.read(musicSourceProvider(synthizerContext));
+          final footstepSoundsSource = ref.read(
+            footstepSoundsSourceProvider(synthizerContext),
+          );
+          final oldGameOptions = await ref.read(gameOptionsProvider.future);
+          final newOptions = GameOptions();
+          ambianceSource.gain.value = newOptions.ambiancesGain;
+          interfaceSoundsSource.gain.value = newOptions.interfaceSoundsGain;
+          musicSource.gain.value = newOptions.musicGain;
+          footstepSoundsSource.gain.value = newOptions.footstepSoundsGain;
+          synthizerContext.defaultPannerStrategy.value =
+              newOptions.pannerStrategy;
+          oldGameOptions
+            ..interfaceSoundsGain = newOptions.interfaceSoundsGain
+            ..ambiancesGain = newOptions.ambiancesGain
+            ..musicGain = newOptions.musicGain
+            ..footstepSoundsGain = newOptions.footstepSoundsGain
+            ..pannerStrategy = newOptions.pannerStrategy;
+          await oldGameOptions.save(ref);
+        },
+      );
 }

@@ -17,6 +17,7 @@ class GameOptions {
     this.interfaceSoundsGain = 0.7,
     this.musicGain = 0.7,
     this.ambiancesGain = 0.7,
+    this.footstepSoundsGain = 0.7,
     this.pannerStrategy = PannerStrategy.stereo,
   });
 
@@ -32,6 +33,9 @@ class GameOptions {
 
   /// The volume for ambiances.
   double ambiancesGain;
+
+  /// The gain of footstep sounds.
+  double footstepSoundsGain;
 
   /// The default panner strategy to use.
   PannerStrategy pannerStrategy;
