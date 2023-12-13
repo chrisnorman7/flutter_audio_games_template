@@ -32,6 +32,9 @@ class IntroScreenState extends ConsumerState<IntroScreen> {
   /// The ambiances source.
   late Source ambianceSoundsSource;
 
+  /// The footstep sounds source.
+  late Source footstepSoundsSource;
+
   /// Dispose of the widget.
   @override
   void dispose() {
@@ -40,6 +43,7 @@ class IntroScreenState extends ConsumerState<IntroScreen> {
       interfaceSoundsSource,
       musicSource,
       ambianceSoundsSource,
+      footstepSoundsSource,
     ]) {
       source.destroy();
     }
@@ -56,12 +60,16 @@ class IntroScreenState extends ConsumerState<IntroScreen> {
     ambianceSoundsSource = ref.watch(
       ambianceSoundsSourceProvider(synthizerContext),
     );
+    footstepSoundsSource = ref.watch(
+      footstepSoundsSourceProvider(synthizerContext),
+    );
     final value = ref.watch(gameOptionsProvider);
     return value.when(
       data: (final gameOptions) {
         interfaceSoundsSource.gain.value = gameOptions.interfaceSoundsGain;
         musicSource.gain.value = gameOptions.musicGain;
         ambianceSoundsSource.gain.value = gameOptions.ambiancesGain;
+        footstepSoundsSource.gain.value = gameOptions.footstepSoundsGain;
         return TransitionSoundBuilder(
           duration: const Duration(seconds: 2),
           builder: (final context) => const MainMenu(),
