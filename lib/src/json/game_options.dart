@@ -40,10 +40,18 @@ class GameOptions {
   Map<String, dynamic> toJson() => _$GameOptionsToJson(this);
 
   /// Save the options.
-  Future<void> save(final WidgetRef ref) async {
+  ///
+  /// If [invalidateProvider] is `true`, then [gameOptionsProvider] will be
+  /// invalidated.
+  Future<void> save(
+    final WidgetRef ref, {
+    final bool invalidateProvider = true,
+  }) async {
     final sharedPreferences = await ref.read(sharedPreferencesProvider.future);
     final json = jsonEncode(this);
     await sharedPreferences.setString(gameOptionsKey, json);
-    ref.invalidate(gameOptionsProvider);
+    if (invalidateProvider) {
+      ref.invalidate(gameOptionsProvider);
+    }
   }
 }
