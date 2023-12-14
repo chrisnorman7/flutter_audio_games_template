@@ -65,11 +65,12 @@ class IntroScreenState extends ConsumerState<IntroScreen> {
     );
     final value = ref.watch(gameOptionsProvider);
     return value.when(
-      data: (final gameOptions) {
-        interfaceSoundsSource.gain.value = gameOptions.interfaceSoundsGain;
-        musicSource.gain.value = gameOptions.musicGain;
-        ambianceSoundsSource.gain.value = gameOptions.ambiancesGain;
-        footstepSoundsSource.gain.value = gameOptions.footstepSoundsGain;
+      data: (final options) {
+        interfaceSoundsSource.gain.value = options.interfaceSoundsGain;
+        musicSource.gain.value = options.musicGain;
+        ambianceSoundsSource.gain.value = options.ambiancesGain;
+        footstepSoundsSource.gain.value = options.footstepSoundsGain;
+        synthizerContext.defaultPannerStrategy.value = options.pannerStrategy;
         return TransitionSoundBuilder(
           duration: const Duration(seconds: 2),
           builder: (final context) => const MainMenu(),
