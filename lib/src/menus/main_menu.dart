@@ -45,11 +45,11 @@ class MainMenu extends ConsumerWidget {
       ],
       interfaceSoundsSource: interfaceSoundsSource,
       musicSource: musicSource,
-      activateItemSoundAssetPath: Assets.sounds.menus.activate,
-      musicAssetPath: Assets.sounds.music.mainTheme,
+      activateItemSound: Assets.sounds.menus.activate.asSound(),
+      music: Assets.sounds.music.mainTheme.asSound(),
       musicFadeIn: 1.0,
       musicFadeOut: 2.0,
-      selectItemSoundAssetPath: Assets.sounds.menus.select,
+      selectItemSound: Assets.sounds.menus.select.asSound(),
     );
   }
 }

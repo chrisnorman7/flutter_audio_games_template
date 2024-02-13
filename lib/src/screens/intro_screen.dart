@@ -74,7 +74,7 @@ class IntroScreenState extends ConsumerState<IntroScreen> {
         return TransitionSoundBuilder(
           duration: const Duration(seconds: 2),
           builder: (final context) => const MainMenu(),
-          sound: Assets.sounds.interface.intro,
+          sound: Assets.sounds.interface.intro.asSound(),
           source: interfaceSoundsSource,
           loadingBuilder: (final context) => const LoadingScreen(),
         );

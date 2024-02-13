@@ -121,7 +121,7 @@ class MyApp extends ConsumerWidget {
                   intent.setGain(gameOptions, gain);
                   await gameOptions.save(ref, invalidateProvider: false);
                   if (innerContext.mounted) {
-                    await innerContext.playSound(
+                    await innerContext.playAssetPath(
                       assetPath: Assets.sounds.interface.volumeChange,
                       source: source,
                       destroy: true,
