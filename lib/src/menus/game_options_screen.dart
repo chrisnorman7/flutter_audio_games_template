@@ -47,7 +47,9 @@ class GameOptionsScreen extends ConsumerWidget {
                   await gameOptions.save(ref);
                 },
                 source: interfaceSoundsSource,
-                volumeChangeSound: Assets.sounds.interface.volumeChange,
+                volumeChangeSound:
+                    Assets.sounds.interface.volumeChange.asSound(),
+                autofocus: true,
               ),
               GainListTile(
                 title: 'Music volume',
@@ -57,7 +59,8 @@ class GameOptionsScreen extends ConsumerWidget {
                   await gameOptions.save(ref);
                 },
                 source: musicSource,
-                volumeChangeSound: Assets.sounds.interface.volumeChange,
+                volumeChangeSound:
+                    Assets.sounds.interface.volumeChange.asSound(),
               ),
               GainListTile(
                 title: 'Ambiances volume',
@@ -67,8 +70,8 @@ class GameOptionsScreen extends ConsumerWidget {
                   await gameOptions.save(ref);
                 },
                 source: ambianceSoundsSource,
-                autofocus: true,
-                volumeChangeSound: Assets.sounds.interface.volumeChange,
+                volumeChangeSound:
+                    Assets.sounds.interface.volumeChange.asSound(),
               ),
               GainListTile(
                 title: 'Footstep sounds volume',
@@ -78,7 +81,8 @@ class GameOptionsScreen extends ConsumerWidget {
                   await gameOptions.save(ref);
                 },
                 source: footstepSoundsSource,
-                volumeChangeSound: Assets.sounds.interface.volumeChange,
+                volumeChangeSound:
+                    Assets.sounds.interface.volumeChange.asSound(),
               ),
               ListTile(
                 title: const Text('Audio mode'),
