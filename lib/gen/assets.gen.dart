@@ -10,8 +10,13 @@
 class $SoundsGen {
   const $SoundsGen();
 
+  /// Directory path: sounds/interface
   $SoundsInterfaceGen get interface => const $SoundsInterfaceGen();
+
+  /// Directory path: sounds/menus
   $SoundsMenusGen get menus => const $SoundsMenusGen();
+
+  /// Directory path: sounds/music
   $SoundsMusicGen get music => const $SoundsMusicGen();
 }
 
