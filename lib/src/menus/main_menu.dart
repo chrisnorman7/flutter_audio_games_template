@@ -25,17 +25,30 @@ class MainMenu extends ConsumerWidget {
             onActivate: (final innerContext) {
               // TODO: Code me.
             },
+            earcon: Assets.sounds.menus.voices.playGame.asSound(
+              destroy: false,
+              soundType: SoundType.asset,
+            ),
           ),
           AudioGameMenuItem(
             title: 'Game options',
             onActivate: (final innerContext) => innerContext.pushWidgetBuilder(
               (final context) => const GameOptionsScreen(),
             ),
+            earcon: Assets.sounds.menus.voices.gameOptions.asSound(
+              destroy: false,
+              soundType: SoundType.asset,
+            ),
           ),
           AudioGameMenuItem(
             title: 'Visit chrisnorman7 on GitHub',
-            onActivate: (final innerContext) =>
-                launchUrl(Uri.parse('https://github.com/chrisnorman7')),
+            onActivate: (final innerContext) => launchUrl(
+              Uri.parse('https://github.com/chrisnorman7'),
+            ),
+            earcon: Assets.sounds.menus.voices.visitGithub.asSound(
+              destroy: false,
+              soundType: SoundType.asset,
+            ),
           ),
         ],
         activateItemSound: Assets.sounds.menus.activate.asSound(

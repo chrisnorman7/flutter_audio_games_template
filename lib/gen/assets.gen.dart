@@ -42,6 +42,9 @@ class $SoundsMenusGen {
   /// File path: sounds/menus/select.wav
   String get select => 'sounds/menus/select.wav';
 
+  /// Directory path: sounds/menus/voices
+  $SoundsMenusVoicesGen get voices => const $SoundsMenusVoicesGen();
+
   /// List of all assets
   List<String> get values => [activate, select];
 }
@@ -54,6 +57,22 @@ class $SoundsMusicGen {
 
   /// List of all assets
   List<String> get values => [mainTheme];
+}
+
+class $SoundsMenusVoicesGen {
+  const $SoundsMenusVoicesGen();
+
+  /// File path: sounds/menus/voices/game_options.mp3
+  String get gameOptions => 'sounds/menus/voices/game_options.mp3';
+
+  /// File path: sounds/menus/voices/play_game.mp3
+  String get playGame => 'sounds/menus/voices/play_game.mp3';
+
+  /// File path: sounds/menus/voices/visit_github.mp3
+  String get visitGithub => 'sounds/menus/voices/visit_github.mp3';
+
+  /// List of all assets
+  List<String> get values => [gameOptions, playGame, visitGithub];
 }
 
 class Assets {

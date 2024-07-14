@@ -35,4 +35,5 @@ flutter:
   assets:
     - sounds/interface/
     - sounds/menus/
+    - sounds/menus/voices/
     - sounds/music/
