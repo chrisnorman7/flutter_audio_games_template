@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dart_synthizer/dart_synthizer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,31 +13,15 @@ part 'game_options.g.dart';
 class GameOptions {
   /// Create an instance.
   GameOptions({
-    this.interfaceSoundsGain = 0.7,
-    this.musicGain = 0.7,
-    this.ambiancesGain = 0.7,
-    this.footstepSoundsGain = 0.7,
-    this.pannerStrategy = PannerStrategy.stereo,
+    required this.masterVolume,
   });
 
   /// Create an instance from a JSON object.
   factory GameOptions.fromJson(final Map<String, dynamic> json) =>
       _$GameOptionsFromJson(json);
 
-  /// The volume for interface sounds.
-  double interfaceSoundsGain;
-
-  /// The volume for music.
-  double musicGain;
-
-  /// The volume for ambiances.
-  double ambiancesGain;
-
-  /// The gain of footstep sounds.
-  double footstepSoundsGain;
-
-  /// The default panner strategy to use.
-  PannerStrategy pannerStrategy;
+  /// The master volume.
+  double masterVolume;
 
   /// Convert an instance to JSON.
   Map<String, dynamic> toJson() => _$GameOptionsToJson(this);
