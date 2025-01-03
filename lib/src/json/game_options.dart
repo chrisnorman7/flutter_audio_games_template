@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../providers.dart';
@@ -12,9 +13,7 @@ part 'game_options.g.dart';
 @JsonSerializable()
 class GameOptions {
   /// Create an instance.
-  GameOptions({
-    required this.masterVolume,
-  });
+  GameOptions({required this.masterVolume});
 
   /// Create an instance from a JSON object.
   factory GameOptions.fromJson(final Map<String, dynamic> json) =>
@@ -34,7 +33,7 @@ class GameOptions {
     final WidgetRef ref, {
     final bool invalidateProvider = true,
   }) async {
-    final sharedPreferences = await ref.read(sharedPreferencesProvider.future);
+    final sharedPreferences = SharedPreferencesAsync();
     final json = jsonEncode(this);
     await sharedPreferences.setString(gameOptionsKey, json);
     if (invalidateProvider) {

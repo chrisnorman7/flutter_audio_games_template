@@ -1,5 +1,5 @@
+import 'package:backstreets_widgets/extensions.dart';
 import 'package:backstreets_widgets/screens.dart';
-import 'package:backstreets_widgets/util.dart';
 import 'package:backstreets_widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_games/flutter_audio_games.dart';
@@ -11,9 +11,7 @@ import '../providers.dart';
 /// The game options screen.
 class GameOptionsScreen extends ConsumerWidget {
   /// Create an instance.
-  const GameOptionsScreen({
-    super.key,
-  });
+  const GameOptionsScreen({super.key});
 
   /// Build the widget.
   @override
@@ -23,28 +21,29 @@ class GameOptionsScreen extends ConsumerWidget {
       child: SimpleScaffold(
         title: 'Game Options',
         body: value.when(
-          data: (final gameOptions) => ListView(
-            children: [
-              DoubleListTile(
-                autofocus: true,
-                value: gameOptions.masterVolume,
-                onChanged: (final volume) async {
-                  context.soLoud.setGlobalVolume(volume);
-                  gameOptions.masterVolume = volume;
-                  await gameOptions.save(ref);
-                },
-                title: 'Master volume',
-                decimalPlaces: 1,
-                min: 0.0,
-                max: 2.0,
-                modifier: 0.1,
+          data:
+              (final gameOptions) => ListView(
+                children: [
+                  DoubleListTile(
+                    autofocus: true,
+                    value: gameOptions.masterVolume,
+                    onChanged: (final volume) async {
+                      context.soLoud.setGlobalVolume(volume);
+                      gameOptions.masterVolume = volume;
+                      await gameOptions.save(ref);
+                    },
+                    title: 'Master volume',
+                    decimalPlaces: 1,
+                    min: 0.0,
+                    max: 2.0,
+                    modifier: 0.1,
+                  ),
+                  ListTile(
+                    title: const Text('Reset Options'),
+                    onTap: () => resetGameOptions(context, ref),
+                  ),
+                ],
               ),
-              ListTile(
-                title: const Text('Reset Options'),
-                onTap: () => resetGameOptions(context, ref),
-              ),
-            ],
-          ),
           error: ErrorListView.withPositional,
           loading: LoadingWidget.new,
         ),
@@ -54,14 +53,11 @@ class GameOptionsScreen extends ConsumerWidget {
 
   /// Reset all options to their defaults.
   void resetGameOptions(final BuildContext context, final WidgetRef ref) =>
-      confirm(
-        context: context,
+      context.confirm(
         message: 'Really reset options to their defaults?',
         yesCallback: () async {
           Navigator.pop(context);
-          final newOptions = GameOptions(
-            masterVolume: 1.0,
-          );
+          final newOptions = GameOptions(masterVolume: 1.0);
           context.soLoud.setGlobalVolume(newOptions.masterVolume);
           await newOptions.save(ref);
         },

@@ -6,25 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sharedPreferencesHash() => r'e607f7351fa94c298e3676fa14ad95aac093f433';
-
-/// The shared preferences provider.
-///
-/// Copied from [sharedPreferences].
-@ProviderFor(sharedPreferences)
-final sharedPreferencesProvider =
-    AutoDisposeFutureProvider<SharedPreferences>.internal(
-  sharedPreferences,
-  name: r'sharedPreferencesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$sharedPreferencesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef SharedPreferencesRef = AutoDisposeFutureProviderRef<SharedPreferences>;
-String _$gameOptionsHash() => r'8098aabb551f53c612d1abfc8fa13c6bcde7d32d';
+String _$gameOptionsHash() => r'e302d73ed43235c3b00af6aad9c4e2878aa558f3';
 
 /// The game options provider.
 ///
@@ -39,6 +21,8 @@ final gameOptionsProvider = AutoDisposeFutureProvider<GameOptions>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef GameOptionsRef = AutoDisposeFutureProviderRef<GameOptions>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
