@@ -14,18 +14,25 @@ class IntroScreen extends ConsumerWidget {
 
   /// Build a widget.
   @override
-  Widget build(final BuildContext context, final WidgetRef ref) =>
-      TimedBuilders(
+  Widget build(final BuildContext context, final WidgetRef ref) {
+    final introSound = Assets.sounds.interface.intro.asSound(
+      destroy: true,
+      soundType: SoundType.asset,
+    );
+    return LoadSounds(
+      sounds: [introSound],
+      error: ErrorScreen.withPositional,
+      loading: LoadingScreen.new,
+      child: TimedBuilders(
         duration: const Duration(seconds: 2),
         builders: [
-          (final builderContext) => PlaySound(
-                sound: Assets.sounds.interface.intro.asSound(
-                  destroy: true,
-                  soundType: SoundType.asset,
-                ),
-                child: const LoadingScreen(),
-              ),
+          (final builderContext) {
+            builderContext.playSound(introSound);
+            return const LoadingScreen();
+          },
           (final builderContext) => const MainMenu(),
         ],
-      );
+      ),
+    );
+  }
 }
