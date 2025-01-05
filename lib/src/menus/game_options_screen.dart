@@ -21,29 +21,35 @@ class GameOptionsScreen extends ConsumerWidget {
       child: SimpleScaffold(
         title: 'Game Options',
         body: value.when(
-          data:
-              (final gameOptions) => ListView(
-                children: [
-                  DoubleListTile(
-                    autofocus: true,
-                    value: gameOptions.masterVolume,
-                    onChanged: (final volume) async {
-                      context.soLoud.setGlobalVolume(volume);
-                      gameOptions.masterVolume = volume;
-                      await gameOptions.save(ref);
-                    },
-                    title: 'Master volume',
-                    decimalPlaces: 1,
-                    min: 0.0,
-                    max: 2.0,
-                    modifier: 0.1,
-                  ),
-                  ListTile(
-                    title: const Text('Reset Options'),
-                    onTap: () => resetGameOptions(context, ref),
-                  ),
-                ],
+          data: (final gameOptions) => ListView(
+            shrinkWrap: true,
+            children: [
+              DoubleListTile(
+                autofocus: true,
+                value: gameOptions.masterVolume,
+                onChanged: (final volume) async {
+                  context.soLoud.setGlobalVolume(volume);
+                  gameOptions.masterVolume = volume;
+                  await gameOptions.save(ref);
+                },
+                title: 'Master volume',
+                decimalPlaces: 1,
+                min: 0.0,
+                max: 2.0,
+                modifier: 0.1,
               ),
+              ListTile(
+                title: const Text('Change audio device'),
+                onTap: () => context.pushWidgetBuilder(
+                  (final _) => const SelectPlaybackDevice(),
+                ),
+              ),
+              ListTile(
+                title: const Text('Reset Options'),
+                onTap: () => resetGameOptions(context, ref),
+              ),
+            ],
+          ),
           error: ErrorListView.withPositional,
           loading: LoadingWidget.new,
         ),
@@ -57,7 +63,7 @@ class GameOptionsScreen extends ConsumerWidget {
         message: 'Really reset options to their defaults?',
         yesCallback: () async {
           Navigator.pop(context);
-          final newOptions = GameOptions(masterVolume: 1.0);
+          final newOptions = GameOptions();
           context.soLoud.setGlobalVolume(newOptions.masterVolume);
           await newOptions.save(ref);
         },

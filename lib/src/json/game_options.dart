@@ -13,7 +13,7 @@ part 'game_options.g.dart';
 @JsonSerializable()
 class GameOptions {
   /// Create an instance.
-  GameOptions({required this.masterVolume});
+  GameOptions({this.masterVolume = 1.0});
 
   /// Create an instance from a JSON object.
   factory GameOptions.fromJson(final Map<String, dynamic> json) =>

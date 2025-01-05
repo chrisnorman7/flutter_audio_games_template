@@ -7,7 +7,7 @@ part of 'game_options.dart';
 // **************************************************************************
 
 GameOptions _$GameOptionsFromJson(Map<String, dynamic> json) => GameOptions(
-      masterVolume: (json['masterVolume'] as num).toDouble(),
+      masterVolume: (json['masterVolume'] as num?)?.toDouble() ?? 1.0,
     );
 
 Map<String, dynamic> _$GameOptionsToJson(GameOptions instance) =>
