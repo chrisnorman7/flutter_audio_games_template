@@ -68,11 +68,11 @@ class $SoundsMenusVoicesGen {
   /// File path: sounds/menus/voices/play_game.mp3
   String get playGame => 'sounds/menus/voices/play_game.mp3';
 
-  /// File path: sounds/menus/voices/visit_github.mp3
-  String get visitGithub => 'sounds/menus/voices/visit_github.mp3';
+  /// File path: sounds/menus/voices/visit_git_hub.mp3
+  String get visitGitHub => 'sounds/menus/voices/visit_git_hub.mp3';
 
   /// List of all assets
-  List<String> get values => [gameOptions, playGame, visitGithub];
+  List<String> get values => [gameOptions, playGame, visitGitHub];
 }
 
 class Assets {

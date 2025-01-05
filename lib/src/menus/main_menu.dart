@@ -1,7 +1,6 @@
 import 'package:backstreets_widgets/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_games/flutter_audio_games.dart';
-import 'package:flutter_audio_games/touch.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,55 +14,70 @@ class MainMenu extends ConsumerWidget {
 
   /// Build the widget.
   @override
-  Widget build(final BuildContext context, final WidgetRef ref) => TouchMenu(
-    title: 'Main Menu',
-    menuItems: [
-      AudioGameMenuItem(
-        title: 'Play game',
-        onActivate: (final innerContext) {
-          // TODO: Code me.
-        },
-        earcon: Assets.sounds.menus.voices.playGame.asSound(
-          destroy: false,
-          soundType: SoundType.asset,
-        ),
-      ),
-      AudioGameMenuItem(
-        title: 'Game options',
-        onActivate:
-            (final innerContext) => innerContext.pushWidgetBuilder(
-              (final context) => const GameOptionsScreen(),
-            ),
-        earcon: Assets.sounds.menus.voices.gameOptions.asSound(
-          destroy: false,
-          soundType: SoundType.asset,
-        ),
-      ),
-      AudioGameMenuItem(
-        title: 'Visit chrisnorman7 on GitHub',
-        onActivate:
-            (final innerContext) =>
-                launchUrl(Uri.parse('https://github.com/chrisnorman7')),
-        earcon: Assets.sounds.menus.voices.visitGithub.asSound(
-          destroy: false,
-          soundType: SoundType.asset,
-        ),
-      ),
-    ],
-    music: Assets.sounds.music.mainTheme.asSound(
+  Widget build(final BuildContext context, final WidgetRef ref) {
+    final music = Assets.sounds.music.mainTheme.asSound(
       destroy: false,
       soundType: SoundType.asset,
       looping: true,
-    ),
-    musicFadeInTime: const Duration(seconds: 1),
-    musicFadeOutTime: const Duration(seconds: 2),
-    activateItemSound: Assets.sounds.menus.activate.asSound(
+    );
+    final activateItemSound = Assets.sounds.menus.activate.asSound(
       destroy: false,
       soundType: SoundType.asset,
-    ),
-    selectItemSound: Assets.sounds.menus.select.asSound(
+    );
+    final selectItemSound = Assets.sounds.menus.select.asSound(
       destroy: false,
       soundType: SoundType.asset,
-    ),
-  );
+    );
+    final playGame = Assets.sounds.menus.voices.playGame.asSound(
+      destroy: false,
+      soundType: SoundType.asset,
+    );
+    final gameOptions = Assets.sounds.menus.voices.gameOptions.asSound(
+      destroy: false,
+      soundType: SoundType.asset,
+    );
+    final visitGitHub = Assets.sounds.menus.voices.visitGitHub.asSound(
+      destroy: false,
+      soundType: SoundType.asset,
+    );
+    return ProtectSounds(
+      sounds: [
+        selectItemSound,
+        activateItemSound,
+        playGame,
+        gameOptions,
+        visitGitHub,
+      ],
+      child: AudioGameMenu(
+        title: 'Main Menu',
+        menuItems: [
+          AudioGameMenuItem(
+            title: 'Play game',
+            onActivate: (final innerContext) {
+              // TODO: Code me.
+            },
+            earcon: playGame,
+          ),
+          AudioGameMenuItem(
+            title: 'Game options',
+            onActivate: (final innerContext) => innerContext.pushWidgetBuilder(
+              (final context) => const GameOptionsScreen(),
+            ),
+            earcon: gameOptions,
+          ),
+          AudioGameMenuItem(
+            title: 'Visit chrisnorman7 on GitHub',
+            onActivate: (final innerContext) =>
+                launchUrl(Uri.parse('https://github.com/chrisnorman7')),
+            earcon: visitGitHub,
+          ),
+        ],
+        selectItemSound: selectItemSound,
+        activateItemSound: activateItemSound,
+        music: music,
+        musicFadeInTime: const Duration(seconds: 1),
+        musicFadeOutTime: const Duration(seconds: 2),
+      ),
+    );
+  }
 }

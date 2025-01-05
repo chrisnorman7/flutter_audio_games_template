@@ -19,12 +19,12 @@ class IntroScreen extends ConsumerWidget {
         duration: const Duration(seconds: 2),
         builders: [
           (final builderContext) => PlaySound(
-            sound: Assets.sounds.interface.intro.asSound(
-              destroy: true,
-              soundType: SoundType.asset,
-            ),
-            child: const LoadingScreen(),
-          ),
+                sound: Assets.sounds.interface.intro.asSound(
+                  destroy: true,
+                  soundType: SoundType.asset,
+                ),
+                child: const LoadingScreen(),
+              ),
           (final builderContext) => const MainMenu(),
         ],
       );
